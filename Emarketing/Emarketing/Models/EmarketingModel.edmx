@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EmarketingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tadmin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="admin_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="admin_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tcategory">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="category_image" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="category_fk_admin" Type="int" Nullable="false" />
+          <Property Name="category_status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tproduct">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="product_image" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="product_price" Type="int" />
+          <Property Name="product_fk_user" Type="int" />
+          <Property Name="product_des" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="product_fk_category" Type="int" />
+        </EntityType>
+        <EntityType Name="Tuser">
+          <Key>
+            <PropertyRef Name="Tuser_id" />
+          </Key>
+          <Property Name="Tuser_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tuser_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tuser_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tuser_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tuser_image" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Tuser_contact" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Tcategory__categ__4222D4EF">
+          <End Role="Tadmin" Type="Self.Tadmin" Multiplicity="1" />
+          <End Role="Tcategory" Type="Self.Tcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tadmin">
+              <PropertyRef Name="admin_id" />
+            </Principal>
+            <Dependent Role="Tcategory">
+              <PropertyRef Name="category_fk_admin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tproduct__produc__48CFD27E">
+          <End Role="Tuser" Type="Self.Tuser" Multiplicity="0..1" />
+          <End Role="Tproduct" Type="Self.Tproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tuser">
+              <PropertyRef Name="Tuser_id" />
+            </Principal>
+            <Dependent Role="Tproduct">
+              <PropertyRef Name="product_fk_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tproduct__produc__49C3F6B7">
+          <End Role="Tcategory" Type="Self.Tcategory" Multiplicity="0..1" />
+          <End Role="Tproduct" Type="Self.Tproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tcategory">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="Tproduct">
+              <PropertyRef Name="product_fk_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmarketingModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tadmin" EntityType="Self.Tadmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tcategory" EntityType="Self.Tcategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tproduct" EntityType="Self.Tproduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tuser" EntityType="Self.Tuser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Tcategory__categ__4222D4EF" Association="Self.FK__Tcategory__categ__4222D4EF">
+            <End Role="Tadmin" EntitySet="Tadmin" />
+            <End Role="Tcategory" EntitySet="Tcategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tproduct__produc__48CFD27E" Association="Self.FK__Tproduct__produc__48CFD27E">
+            <End Role="Tuser" EntitySet="Tuser" />
+            <End Role="Tproduct" EntitySet="Tproduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tproduct__produc__49C3F6B7" Association="Self.FK__Tproduct__produc__49C3F6B7">
+            <End Role="Tcategory" EntitySet="Tcategory" />
+            <End Role="Tproduct" EntitySet="Tproduct" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmarketingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tadmin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="admin_username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="admin_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tcategory" Relationship="Self.FK__Tcategory__categ__4222D4EF" FromRole="Tadmin" ToRole="Tcategory" />
+        </EntityType>
+        <EntityType Name="Tcategory">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_fk_admin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tadmin" Relationship="Self.FK__Tcategory__categ__4222D4EF" FromRole="Tcategory" ToRole="Tadmin" />
+          <NavigationProperty Name="Tproduct" Relationship="Self.FK__Tproduct__produc__49C3F6B7" FromRole="Tcategory" ToRole="Tproduct" />
+          <Property Name="category_status" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tproduct">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="product_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="product_price" Type="Int32" />
+          <Property Name="product_fk_user" Type="Int32" />
+          <Property Name="product_des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="product_fk_category" Type="Int32" />
+          <NavigationProperty Name="Tcategory" Relationship="Self.FK__Tproduct__produc__49C3F6B7" FromRole="Tproduct" ToRole="Tcategory" />
+          <NavigationProperty Name="Tuser" Relationship="Self.FK__Tproduct__produc__48CFD27E" FromRole="Tproduct" ToRole="Tuser" />
+        </EntityType>
+        <EntityType Name="Tuser">
+          <Key>
+            <PropertyRef Name="Tuser_id" />
+          </Key>
+          <Property Name="Tuser_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tuser_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tuser_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tuser_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tuser_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tuser_contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tproduct" Relationship="Self.FK__Tproduct__produc__48CFD27E" FromRole="Tuser" ToRole="Tproduct" />
+        </EntityType>
+        <Association Name="FK__Tcategory__categ__4222D4EF">
+          <End Role="Tadmin" Type="Self.Tadmin" Multiplicity="1" />
+          <End Role="Tcategory" Type="Self.Tcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tadmin">
+              <PropertyRef Name="admin_id" />
+            </Principal>
+            <Dependent Role="Tcategory">
+              <PropertyRef Name="category_fk_admin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tproduct__produc__49C3F6B7">
+          <End Role="Tcategory" Type="Self.Tcategory" Multiplicity="0..1" />
+          <End Role="Tproduct" Type="Self.Tproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tcategory">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="Tproduct">
+              <PropertyRef Name="product_fk_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tproduct__produc__48CFD27E">
+          <End Role="Tuser" Type="Self.Tuser" Multiplicity="0..1" />
+          <End Role="Tproduct" Type="Self.Tproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tuser">
+              <PropertyRef Name="Tuser_id" />
+            </Principal>
+            <Dependent Role="Tproduct">
+              <PropertyRef Name="product_fk_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmarketingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tadmin" EntityType="Self.Tadmin" />
+          <EntitySet Name="Tcategory" EntityType="Self.Tcategory" />
+          <EntitySet Name="Tproduct" EntityType="Self.Tproduct" />
+          <EntitySet Name="Tuser" EntityType="Self.Tuser" />
+          <AssociationSet Name="FK__Tcategory__categ__4222D4EF" Association="Self.FK__Tcategory__categ__4222D4EF">
+            <End Role="Tadmin" EntitySet="Tadmin" />
+            <End Role="Tcategory" EntitySet="Tcategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tproduct__produc__49C3F6B7" Association="Self.FK__Tproduct__produc__49C3F6B7">
+            <End Role="Tcategory" EntitySet="Tcategory" />
+            <End Role="Tproduct" EntitySet="Tproduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tproduct__produc__48CFD27E" Association="Self.FK__Tproduct__produc__48CFD27E">
+            <End Role="Tuser" EntitySet="Tuser" />
+            <End Role="Tproduct" EntitySet="Tproduct" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmarketingModelStoreContainer" CdmEntityContainer="EmarketingEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EmarketingModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tadmin">
+            <EntityTypeMapping TypeName="EmarketingModel.Tadmin">
+              <MappingFragment StoreEntitySet="Tadmin">
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="admin_username" ColumnName="admin_username" />
+                <ScalarProperty Name="admin_password" ColumnName="admin_password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tcategory">
+            <EntityTypeMapping TypeName="EmarketingModel.Tcategory">
+              <MappingFragment StoreEntitySet="Tcategory">
+                <ScalarProperty Name="category_status" ColumnName="category_status" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="category_image" ColumnName="category_image" />
+                <ScalarProperty Name="category_fk_admin" ColumnName="category_fk_admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tproduct">
+            <EntityTypeMapping TypeName="EmarketingModel.Tproduct">
+              <MappingFragment StoreEntitySet="Tproduct">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="product_image" ColumnName="product_image" />
+                <ScalarProperty Name="product_price" ColumnName="product_price" />
+                <ScalarProperty Name="product_fk_user" ColumnName="product_fk_user" />
+                <ScalarProperty Name="product_des" ColumnName="product_des" />
+                <ScalarProperty Name="product_fk_category" ColumnName="product_fk_category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tuser">
+            <EntityTypeMapping TypeName="EmarketingModel.Tuser">
+              <MappingFragment StoreEntitySet="Tuser">
+                <ScalarProperty Name="Tuser_id" ColumnName="Tuser_id" />
+                <ScalarProperty Name="Tuser_name" ColumnName="Tuser_name" />
+                <ScalarProperty Name="Tuser_email" ColumnName="Tuser_email" />
+                <ScalarProperty Name="Tuser_password" ColumnName="Tuser_password" />
+                <ScalarProperty Name="Tuser_image" ColumnName="Tuser_image" />
+                <ScalarProperty Name="Tuser_contact" ColumnName="Tuser_contact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

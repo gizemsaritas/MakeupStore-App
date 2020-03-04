@@ -1,0 +1,28 @@
+﻿
+@model IEnumerable<Emarketing.Models.Tuser>
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    WebGrid webGrid = new WebGrid(Model);
+}
+@webGrid.GetHtml(
+     tableStyle: "table", /*your class name for this property*/
+      headerStyle: "webgrid-header",/*your class name for this property*/
+      footerStyle: "webgrid-footer", /*your class name for this property*/
+      rowStyle: "webgrid-row-style", /*your class name for this property*/
+      alternatingRowStyle: "webgrid-alternating-row",/*your class name...*/                                         selectedRowStyle: "webgrid-selected-row",/*your class name for this property*/
+
+      firstText: "<<",
+      lastText: ">>",
+      mode: WebGridPagerModes.All,
+      fillEmptyRows: true,
+    
+      columns:webGrid.Columns(
+        webGrid.Column("Tuser_id","User ID"),
+        webGrid.Column("Tuser_name", "Username"),
+        webGrid.Column("Tuser_email", "Email"),
+        webGrid.Column("Tuser_contact", "Contact")
+
+        )
+    )

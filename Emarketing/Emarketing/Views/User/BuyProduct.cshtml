@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Emarketing.Models.Tproduct>
+
+@{
+    ViewBag.Title = "BuyProduct";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+           Price
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Posted By
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.product_name)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.product_price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tcategory.category_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tuser.Tuser_name)
+        </td>
+        
+    </tr>
+}
+
+</table>

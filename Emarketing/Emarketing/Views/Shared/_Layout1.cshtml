@@ -1,0 +1,116 @@
+﻿<style>
+   
+    body, html {
+        background-image: url(../../Content/img/bg.jpg);
+        background-size: cover;
+    }
+
+    .insidebox {
+        border: 1px solid white;
+        margin: 10% auto 10% auto;
+        max-width: 500px;
+        min-width: 150px;
+        padding-left: 60px;
+        padding-right: 60px;
+        border-radius: 50px 50px 50px 50px;
+        background-color: rgba(242,219, 208,0.5);
+    }
+
+    div h1 {
+        text-align: center;
+    }
+
+    p#para {
+        text-align: center;
+        font-size: 14px;
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/paginition.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-default" style="">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">GISSA</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Category", "Index", "User", null, new { @class = "ht" })</li>
+                <li>
+                    @if (Session["Tuser_id"] != null)
+                    {
+                    @Html.ActionLink("Add Product", "CreateProduct", "User", null, new { @class = "ht" })
+
+                    }
+                </li>
+                  <li>
+                    @if(Session["admin_id"]!=null)
+                    {
+                        @Html.ActionLink("Users", "ViewUser", "Admin", null, new { @class = "ht" })
+                    }
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                 <li>
+                    @if (Session["Tuser_id"] == null&&Session["admin_id"]==null)
+                {
+
+                    @Html.ActionLink("Login as a Admin", "Login", "Admin", null, new { @class = "ht", })
+
+            }
+                </li>
+               
+                <li>
+                    @if (Session["Tuser_id"] == null && Session["admin_id"] == null)
+                    {
+
+                    @Html.ActionLink("Sign In", "Login", "User", null, new { @class = "ht", })
+
+            }
+                </li>
+                 <li>
+                    @if (Session["Tuser_id"] != null )
+                    {
+                    @Html.ActionLink("Buy Product", "BuyProduct", "User", null, new { @class = "ht" })
+                    }
+                </li>
+                <li>
+                    @if (Session["Tuser_id"] == null && Session["admin_id"] == null)
+                    {
+                    @Html.ActionLink("Sign Up", "SignUp", "User", null, new { @class = "ht" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sign Out", "SignOut", "User", null, new { @class = "ht" })
+                    }
+                </li>
+                
+               
+
+            </ul>
+        </div>
+    </nav>
+    
+    @RenderBody()
+</body>
+</html>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmarketingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tadmin">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="admin_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="admin_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tcategory">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="category_image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="category_fk_admin" Type="int" Nullable="false" />
+    <Property Name="category_status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tproduct">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="product_image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="product_price" Type="int" />
+    <Property Name="product_fk_user" Type="int" />
+    <Property Name="product_des" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="product_fk_category" Type="int" />
+  </EntityType>
+  <EntityType Name="Tuser">
+    <Key>
+      <PropertyRef Name="Tuser_id" />
+    </Key>
+    <Property Name="Tuser_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tuser_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tuser_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tuser_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tuser_image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tuser_contact" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Tcategory__categ__4222D4EF">
+    <End Role="Tadmin" Type="Self.Tadmin" Multiplicity="1" />
+    <End Role="Tcategory" Type="Self.Tcategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tadmin">
+        <PropertyRef Name="admin_id" />
+      </Principal>
+      <Dependent Role="Tcategory">
+        <PropertyRef Name="category_fk_admin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tproduct__produc__48CFD27E">
+    <End Role="Tuser" Type="Self.Tuser" Multiplicity="0..1" />
+    <End Role="Tproduct" Type="Self.Tproduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tuser">
+        <PropertyRef Name="Tuser_id" />
+      </Principal>
+      <Dependent Role="Tproduct">
+        <PropertyRef Name="product_fk_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tproduct__produc__49C3F6B7">
+    <End Role="Tcategory" Type="Self.Tcategory" Multiplicity="0..1" />
+    <End Role="Tproduct" Type="Self.Tproduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tcategory">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Tproduct">
+        <PropertyRef Name="product_fk_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EmarketingModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tadmin" EntityType="Self.Tadmin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tcategory" EntityType="Self.Tcategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tproduct" EntityType="Self.Tproduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tuser" EntityType="Self.Tuser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Tcategory__categ__4222D4EF" Association="Self.FK__Tcategory__categ__4222D4EF">
+      <End Role="Tadmin" EntitySet="Tadmin" />
+      <End Role="Tcategory" EntitySet="Tcategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tproduct__produc__48CFD27E" Association="Self.FK__Tproduct__produc__48CFD27E">
+      <End Role="Tuser" EntitySet="Tuser" />
+      <End Role="Tproduct" EntitySet="Tproduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tproduct__produc__49C3F6B7" Association="Self.FK__Tproduct__produc__49C3F6B7">
+      <End Role="Tcategory" EntitySet="Tcategory" />
+      <End Role="Tproduct" EntitySet="Tproduct" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

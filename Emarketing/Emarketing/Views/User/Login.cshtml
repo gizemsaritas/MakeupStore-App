@@ -1,0 +1,42 @@
+﻿@model Emarketing.Models.Tuser
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<body>
+    <div>
+        <div class="img-responsive">
+            @using (@Html.BeginForm())
+            {
+                <div class="insidebox">
+                    <div> <h1>Log In as an User</h1></div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                           @Html.TextBoxFor(x => x.Tuser_email, new { @class = "form-control", @placeholder = "Email" })
+
+                        </div>
+                        <span style="color:#DF9980">   @Html.ValidationMessageFor(x => x.Tuser_email) </span>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                            @Html.PasswordFor(x => x.Tuser_password, new { @class = "form-control", @placeholder = "Password" })
+
+                        </div>
+                        <span style="color:#DF9980">   @Html.ValidationMessageFor(x => x.Tuser_password) </span>
+                    </div>
+                    <div class="form-group">
+                       <input type="submit" value="Login" class="btn btn-block" />
+                    </div>
+                    <div class="form-group">
+                        <p style="color:#DF9980">@ViewBag.error</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>

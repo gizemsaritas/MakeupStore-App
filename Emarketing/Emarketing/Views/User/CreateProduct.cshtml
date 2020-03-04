@@ -1,0 +1,80 @@
+﻿@model Emarketing.Models.Tproduct
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<body>
+    <div class="img-responsive">
+        @using (Html.BeginForm("CreateProduct",
+                        "User",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+        {
+            <div class="insidebox">
+                <div> <h1>Add Product</h1></div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        @Html.DropDownListFor(x => x.product_fk_category, ViewBag.categorylist as SelectList, "Choose Category", new { @class = "form-control" })
+                    </div>
+                    <span style="color:red">   @Html.ValidationMessageFor(x => x.product_fk_category) </span>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        @Html.TextBoxFor(x => x.product_name, new { @class = "form-control", @placeholder = "Product Name" })
+
+                    </div>
+                    <span style="color:red">   @Html.ValidationMessageFor(x => x.product_name) </span>
+
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        @Html.TextBoxFor(x => x.product_price, new { @class = "form-control", @placeholder = "Price" })
+
+                    </div>
+                    <span style="color:red">   @Html.ValidationMessageFor(x => x.product_price) </span>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        @Html.TextBoxFor(x => x.product_des, new { @class = "form-control", @placeholder = "Description" })
+
+                    </div>
+                    <span style="color:red">   @Html.ValidationMessageFor(x => x.product_des) </span>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+
+                        <input type="file" name="imgfile" id="imgfile" class="form-control" required="required" />
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <input type="submit" value="Add" class="btn btn-block" />
+
+                </div>
+
+                <div class="form-group">
+                    <p style="color:red">@ViewBag.error</p>
+                </div>
+
+
+
+            </div>
+
+        }
+    </div>
+
+</body>

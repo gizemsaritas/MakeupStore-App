@@ -1,0 +1,55 @@
+﻿@model Emarketing.Models.Tadmin
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<body>
+    <div class="img-responsive">
+        @using (@Html.BeginForm())
+        {
+            <div class="insidebox">
+                <div> <h1>Log In as a Admin</h1></div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        @*<asp:TextBox ID="TextBox1" runat="server" class="form-control" placeholder="Username" required="required"></asp:TextBox>*@
+                        @Html.TextBoxFor(x => x.admin_username, new { @class = "form-control", @placeholder = "Username" })
+
+                    </div>
+                    <span style="color:#DF9980">   @Html.ValidationMessageFor(x => x.admin_username) </span>
+
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                        @*<asp:TextBox ID="txtpassword" runat="server" class="form-control" placeholder="Password" TextMode="Password" required="required"></asp:TextBox>*@
+                        @Html.PasswordFor(x => x.admin_password, new { @class = "form-control", @placeholder = "Password" })
+
+                    </div>
+                    <span style="color:#DF9980">   @Html.ValidationMessageFor(x => x.admin_password) </span>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    @*<asp:Button ID="Button1" runat="server" Text="Log In" class="form-control  btn-success" OnClick="Button1_Click" OnClientClick="retrun(passwordmatchfunc())" />*@
+                    <input type="submit" value="Login" class="btn btn btn-block" />
+
+                </div>
+
+                <div class="form-group">
+                    <p style="color:#DF9980">@ViewBag.error</p>
+                </div>
+
+
+
+            </div>
+
+        }
+    </div>
+
+</body>
+
+
